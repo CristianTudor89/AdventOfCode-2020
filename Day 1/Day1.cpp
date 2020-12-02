@@ -16,6 +16,7 @@ void PartOne()
   InputReader reader(input);
 
   auto values = reader.ReadValues();
+  
   for (size_t i = 0; i < values.size() - 1; i++)
     for (size_t j = i + 1; j < values.size(); j++)
       if (values[i] + values[j] == 2020)
