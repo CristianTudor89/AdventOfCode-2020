@@ -66,7 +66,7 @@ struct Passport
     if (pid.size() != 9)
       return false;
 
-    for (int i = 0; i < pid.size(); i++)
+    for (size_t i = 0; i < pid.size(); i++)
       if (pid[i] < '0' && pid[i] > '9')
         return false;
 
@@ -180,8 +180,7 @@ void PartTwo()
     }
   }
 
-  if (!(pass.byr.empty() || pass.iyr.empty() || pass.eyr.empty() || pass.hgt.empty() ||
-        pass.hcl.empty() || pass.ecl.empty() || pass.pid.empty()))
+  if (pass.isValid())
     count++;
 
   cout << count;
