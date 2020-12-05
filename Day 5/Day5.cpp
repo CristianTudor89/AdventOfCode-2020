@@ -1,6 +1,5 @@
 #include "Input.h"
 #include "StringUtil.h"
-#include <algorithm>
 
 using namespace StringUtil;
 
