@@ -24,7 +24,7 @@ void CountTypes(const string & bagName, unordered_set<string> & bagTypes)
   }
 }
 
-int Count1(const string & bagName)
+int CountAmount(const string & bagName)
 {
   int count = 0;
 
@@ -36,7 +36,7 @@ int Count1(const string & bagName)
     if (bags1.size() == 1 && bagsMap.find(bags1[0].type) == bagsMap.end())
       count += bag.amount + bag.amount * bags1[0].amount;
     else
-      count += bag.amount + bag.amount * Count1(bag.type);
+      count += bag.amount + bag.amount * CountAmount(bag.type);
   }
 
   return count;
@@ -130,7 +130,7 @@ void PartTwo()
   }
 
   set<string> bags;
-  int         count = Count1("shinygold");
+  int         count = CountAmount("shinygold");
 
   cout << count;
 }
