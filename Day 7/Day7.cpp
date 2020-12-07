@@ -28,13 +28,12 @@ int CountAmount(const string & bagName)
 {
   int count = 0;
 
-  auto & bags = bagsMap[bagName];
-
-  for (const auto & bag : bags)
+  for (const auto & bag : bagsMap[bagName])
   {
-    auto & bags1 = bagsMap[bag.type];
-    if (bags1.size() == 1 && bagsMap.find(bags1[0].type) == bagsMap.end())
-      count += bag.amount + bag.amount * bags1[0].amount;
+    auto & bags = bagsMap[bag.type];
+
+    if (bags.size() == 1 && bagsMap.find(bags[0].type) == bagsMap.end())
+      count += bag.amount + bag.amount * bags[0].amount;
     else
       count += bag.amount + bag.amount * CountAmount(bag.type);
   }
