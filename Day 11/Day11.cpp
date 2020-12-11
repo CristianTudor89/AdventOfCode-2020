@@ -11,6 +11,7 @@ void PartTwo();
 int AdjCount(const vector<vector<char>> & aMatrix, int i, int j)
 {
   int count = 0;
+
   if (i > 0)
   {
     if (aMatrix[i - 1][j] == '#')
@@ -263,11 +264,7 @@ void PartOne()
     }
     else
     {
-      for (int i = 0; i < matrix1.size(); i++)
-      {
-        for (int j = 0; j < matrix1[i].size(); j++)
-          matrix[i][j] = matrix1[i][j];
-      }
+      matrix = matrix1;
     }
   }
 }
@@ -321,11 +318,7 @@ void PartTwo()
     }
     else
     {
-      for (int i = 0; i < matrix1.size(); i++)
-      {
-        for (int j = 0; j < matrix1[i].size(); j++)
-          matrix[i][j] = matrix1[i][j];
-      }
+      matrix = matrix1;
     }
   }
 }
