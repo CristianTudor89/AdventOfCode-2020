@@ -5,205 +5,68 @@
 using namespace StringUtil;
 using namespace Algorithm;
 
+int rowCount = 0, colCount = 0;
+
+struct Point
+{
+  Point(int x, int y)
+    : x(x)
+    , y(y)
+  {
+  }
+
+  bool IsInBounds() const { return x >= 0 && x < rowCount && y >= 0 && y < colCount; }
+
+  int x;
+  int y;
+};
+
+vector<Point> dirs = { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 },
+                       { 0, 1 },   { 1, -1 }, { 1, 0 },  { 1, 1 } };
+
 void PartOne();
 void PartTwo();
-
-int rowCount = 0, colCount = 0;
 
 int AdjCount(const vector<vector<char>> & aMatrix, int i, int j)
 {
   int count = 0;
 
-  if (i > 0)
+  for (const auto & dir : dirs)
   {
-    if (aMatrix[i - 1][j] == '#')
-      count++;
+    Point nextPoint(i + dir.x, j + dir.y);
 
-    if (j < colCount - 1 && aMatrix[i - 1][j + 1] == '#')
-      count++;
-
-    if (j > 0 && aMatrix[i - 1][j - 1] == '#')
-      count++;
+    if (nextPoint.IsInBounds())
+    {
+      if (aMatrix[nextPoint.x][nextPoint.y] == '#')
+        count++;
+    }
   }
-
-  if (i < rowCount - 1)
-  {
-    if (aMatrix[i + 1][j] == '#')
-      count++;
-
-    if (j < colCount - 1 && aMatrix[i + 1][j + 1] == '#')
-      count++;
-
-    if (j > 0 && aMatrix[i + 1][j - 1] == '#')
-      count++;
-  }
-
-  if (j > 0 && aMatrix[i][j - 1] == '#')
-    count++;
-
-  if (j < colCount - 1 && aMatrix[i][j + 1] == '#')
-    count++;
 
   return count;
 }
 
-int AdjCount1(const vector<vector<char>> & aMatrix, int i, int j)
+int DirCount(const vector<vector<char>> & aMatrix, int i, int j)
 {
   int count = 0;
 
-  if (i > 0)
+  for (const auto & dir : dirs)
   {
-    int k = i - 1;
-    while (k >= 0)
+    Point nextPoint(i + dir.x, j + dir.y);
+
+    while (nextPoint.IsInBounds())
     {
-      if (aMatrix[k][j] == '#')
+      if (aMatrix[nextPoint.x][nextPoint.y] == '#')
       {
         count++;
         break;
       }
-      else if (aMatrix[k][j] == 'L')
+      else if (aMatrix[nextPoint.x][nextPoint.y] == 'L')
         break;
       else
-        k--;
-    }
-
-    if (j < colCount - 1)
-    {
-      k     = i - 1;
-      int l = j + 1;
-
-      while (k >= 0 && l < colCount)
       {
-        if (aMatrix[k][l] == '#')
-        {
-          count++;
-          break;
-        }
-        else if (aMatrix[k][l] == 'L')
-          break;
-        else
-        {
-          k--;
-          l++;
-        }
+        nextPoint.x += dir.x;
+        nextPoint.y += dir.y;
       }
-    }
-
-    if (j > 0)
-    {
-      k     = i - 1;
-      int l = j - 1;
-
-      while (k >= 0 && l >= 0)
-      {
-        if (aMatrix[k][l] == '#')
-        {
-          count++;
-          break;
-        }
-        else if (aMatrix[k][l] == 'L')
-          break;
-        else
-        {
-          k--;
-          l--;
-        }
-      }
-    }
-  }
-
-  if (i < rowCount - 1)
-  {
-    int k = i + 1;
-    while (k < colCount)
-    {
-      if (aMatrix[k][j] == '#')
-      {
-        count++;
-        break;
-      }
-      else if (aMatrix[k][j] == 'L')
-        break;
-      else
-        k++;
-    }
-
-    if (j < colCount - 1)
-    {
-      k     = i + 1;
-      int l = j + 1;
-
-      while (k < colCount && l < colCount)
-      {
-        if (aMatrix[k][l] == '#')
-        {
-          count++;
-          break;
-        }
-        else if (aMatrix[k][l] == 'L')
-          break;
-        else
-        {
-          k++;
-          l++;
-        }
-      }
-    }
-
-    if (j > 0)
-    {
-      k     = i + 1;
-      int l = j - 1;
-
-      while (k < colCount && l >= 0)
-      {
-        if (aMatrix[k][l] == '#')
-        {
-          count++;
-          break;
-        }
-        else if (aMatrix[k][l] == 'L')
-          break;
-        else
-        {
-          k++;
-          l--;
-        }
-      }
-    }
-  }
-
-  if (j > 0)
-  {
-    int k = j - 1;
-    while (k >= 0)
-    {
-      if (aMatrix[i][k] == '#')
-      {
-        count++;
-        break;
-      }
-      else if (aMatrix[i][k] == 'L')
-        break;
-      else
-        k--;
-    }
-  }
-
-  if (j < colCount - 1)
-  {
-    int k = j + 1;
-    while (k <= colCount - 1)
-    {
-      if (aMatrix[i][k] == '#')
-      {
-        count++;
-        break;
-      }
-      else if (aMatrix[i][k] == 'L')
-        break;
-      else
-        k++;
     }
   }
 
@@ -212,7 +75,7 @@ int AdjCount1(const vector<vector<char>> & aMatrix, int i, int j)
 
 int main()
 {
-  PartOne();
+  PartTwo();
 
   return 0;
 }
@@ -292,11 +155,11 @@ void PartTwo()
     {
       for (int j = 0; j < colCount; j++)
       {
-        if (matrix[i][j] == 'L' && AdjCount1(matrix, i, j) == 0)
+        if (matrix[i][j] == 'L' && DirCount(matrix, i, j) == 0)
         {
           matrix1[i][j] = '#';
         }
-        else if (matrix[i][j] == '#' && AdjCount1(matrix, i, j) >= 5)
+        else if (matrix[i][j] == '#' && DirCount(matrix, i, j) >= 5)
         {
           matrix1[i][j] = 'L';
         }
