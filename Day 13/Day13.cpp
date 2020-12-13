@@ -57,14 +57,15 @@ void PartTwo()
   ifstream    input("in.txt");
   InputReader reader(input);
 
-  auto values = reader.ReadValues<string>(",");
+  auto values = reader.ReadStrings();
+  auto tokens = TokenizeString(values[1], ",");
 
   vector<Bus> busVec;
 
-  for (int i = 0; i < values.size(); i++)
+  for (int i = 0; i < tokens.size(); i++)
   {
-    if (values[i] != "x")
-      busVec.push_back({ stoi(values[i]), i });
+    if (tokens[i] != "x")
+      busVec.push_back({ stoi(tokens[i]), i });
   }
 
   unsigned long long numberToTest = 0;
