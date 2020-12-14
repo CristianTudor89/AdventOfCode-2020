@@ -1,5 +1,4 @@
 #include "StringUtil.h"
-#include <assert.h>
 
 vector<char> StringUtil::GetCharVector(const string & aStr)
 {
