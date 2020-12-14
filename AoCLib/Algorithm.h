@@ -1,5 +1,7 @@
 #pragma once
 
+#include "stdafx.h"
+
 namespace Algorithm
 {
 template <class Container, class T>
