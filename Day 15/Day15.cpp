@@ -5,6 +5,12 @@
 using namespace StringUtil;
 using namespace Algorithm;
 
+struct History
+{
+  int previous{ -1 };
+  int last{ -1 };
+};
+
 void PartOne();
 void PartTwo();
 
@@ -26,37 +32,23 @@ void PartOne()
   while (turn != 2020)
   {
     int lastNumber = numbers[turn - 1];
-    int pos        = -1;
-    for (int i = numbers.size() - 2; i >= 0; i--)
-    {
-      if (numbers[i] == lastNumber)
-      {
-        pos = i;
-        break;
-      }
-    }
 
-    if (pos == -1)
+    auto it = std::find(numbers.rbegin() + 1, numbers.rend(), lastNumber);
+    if (it == numbers.rend())
     {
       numbers.push_back(0);
-      turn++;
     }
     else
     {
-      int diff = turn - (pos + 1);
+      int diff = turn - (numbers.rend() - it);
       numbers.push_back(diff);
-      turn++;
     }
+
+    turn++;
   }
 
   cout << numbers.back() << endl;
 }
-
-struct Turn
-{
-  int previous{ -1 };
-  int last{ -1 };
-};
 
 void PartTwo()
 {
@@ -66,7 +58,7 @@ void PartTwo()
   auto numbers = reader.ReadValues(",");
   int  turn    = numbers.size();
 
-  unordered_map<int, Turn> numberMap;
+  unordered_map<int, History> numberMap;
   for (int i = 0; i < numbers.size(); i++)
     numberMap[numbers[i]] = { -1, i + 1 };
 
@@ -77,10 +69,12 @@ void PartTwo()
     auto it = numberMap.find(lastNumber);
     if (it != numberMap.end())
     {
+      turn++;
+
       if (numberMap[lastNumber].previous == -1)
       {
         numbers.push_back(0);
-        turn++;
+
         numberMap[0].previous = numberMap[0].last;
         numberMap[0].last     = turn;
       }
@@ -88,7 +82,6 @@ void PartTwo()
       {
         int diff = numberMap[lastNumber].last - numberMap[lastNumber].previous;
         numbers.push_back(diff);
-        turn++;
 
         numberMap[diff].previous = numberMap[diff].last;
         numberMap[diff].last     = turn;
