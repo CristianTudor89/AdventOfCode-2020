@@ -23,10 +23,10 @@ void Solution(bool aPartTwo)
 
   auto lines = reader.ReadStrings();
 
-  map<string, vector<vector<string>>> allergensIngredientsMap;
+  unordered_map<string, vector<vector<string>>> allergensIngredientsMap;
 
-  unordered_set<string> allIngredients;
-  map<string, int>      occurrenceCount;
+  unordered_set<string>      allIngredients;
+  unordered_map<string, int> occurrenceCount;
 
   for (auto & line : lines)
   {
@@ -47,11 +47,11 @@ void Solution(bool aPartTwo)
       allergensIngredientsMap[allergen].push_back(ingredients);
   }
 
-  map<string, vector<string>> allergensCommonIngredientsMap;
+  unordered_map<string, vector<string>> allergensCommonIngredientsMap;
 
   for (auto & [allergen, possibleIngredients] : allergensIngredientsMap)
   {
-    map<string, int> ingredientCountMap;
+    unordered_map<string, int> ingredientCountMap;
 
     for (auto & ingredients : possibleIngredients)
     {
