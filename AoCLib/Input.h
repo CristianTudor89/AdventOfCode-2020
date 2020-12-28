@@ -83,6 +83,8 @@ public:
 
   vector<vector<char>> ReadCharMatrix();
 
+  vector<string> ReadMatrix();
+
 private:
   ifstream & mInput;
 };

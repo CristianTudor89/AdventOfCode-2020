@@ -19,3 +19,18 @@ vector<vector<char>> InputReader::ReadCharMatrix()
 
   return matrix;
 }
+
+vector<string> InputReader::ReadMatrix()
+{
+  vector<string> matrix;
+
+  while (!mInput.eof())
+  {
+    string row;
+    getline(mInput, row);
+
+    matrix.push_back(row);
+  }
+
+  return matrix;
+}
